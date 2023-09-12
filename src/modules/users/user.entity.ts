@@ -1,4 +1,6 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, BelongsToMany } from 'sequelize-typescript';
+import { Notification } from '../notifications/notification.entity';
+import { NotificationUser } from '../notifications/notificationUser.entity';
 
 @Table
 export class User extends Model<User> {
@@ -27,4 +29,9 @@ export class User extends Model<User> {
     allowNull: false,
   })
   gender: string;
+
+  @BelongsToMany(() => Notification, {
+    through: { model: () => NotificationUser },
+  })
+  notifications!: Notification[];
 }
